@@ -4,8 +4,9 @@
   "description": "start template reactDom",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production",
+    "server": "npm run build --hot && node server",
     "g": "cd .\\src\\app && react-components-jsx-less"
   },
   "keywords": [
@@ -35,8 +36,10 @@
     "babel-loader": "^8.0.2",
     "babel-polyfill": "^6.26.0",
     "base64-inline-loader": "^1.1.1",
+    "body-parser": "^1.18.3",
     "change-case": "^3.0.2",
     "commander": "^2.18.0",
+    "cookie-parser": "^1.4.3",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
@@ -48,6 +51,9 @@
     "less-loader": "^4.1.0",
     "less-plugin-autoprefix": "^2.0.0",
     "less-plugin-clean-css": "^1.5.1",
+    "mongoose": "^5.3.7",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.5",
     "react": "^16.5.1",
     "react-components-jsx-less": "^1.0.2",
     "react-dom": "^16.5.1",

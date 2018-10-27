@@ -65,7 +65,11 @@ module.exports = (env, argv) => {
             inline: true,
             progress: true,
             hot: true,
+            // https: true,
             port: 3000,
+            /*proxy: {
+                '/api': 'http://localhost:3000'
+            },*/
             historyApiFallback: true
         };
         config.watch = true;
