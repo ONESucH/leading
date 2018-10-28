@@ -1,12 +1,12 @@
 {
-  "name": "reactdomstarttemplate",
+  "name": "leading",
   "version": "1.0.0",
-  "description": "start template reactDom",
+  "description": "leading",
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production",
-    "server": "npm run build --hot && node server",
+    "server": "npm run build && nodemon server --watch",
     "g": "cd .\\src\\app && react-components-jsx-less"
   },
   "keywords": [
@@ -16,19 +16,22 @@
     "bower",
     "Babel",
     "eslint",
-    "jest"
+    "jest",
+    "mongodb",
+    "mongoose",
+    "nodemon"
   ],
   "author": "Богданов Илья <onesuch07@gmail.com>",
   "license": "MIT",
   "main": "webpack.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ONESucH/ReactDomWebpack2.git"
+    "url": "git+https://github.com/ONESucH/leading.git.git"
   },
   "bugs": {
-    "url": "https://github.com/ONESucH/ReactDomWebpack2/issues"
+    "url": "https://github.com/ONESucH/leading.git/issues"
   },
-  "homepage": "https://github.com/ONESucH/ReactDomWebpack2#readme",
+  "homepage": "https://github.com/ONESucH/leading.git#readme",
   "devDependencies": {
     "@babel/core": "^7.0.1",
     "@babel/preset-env": "^7.0.0",
@@ -53,7 +56,6 @@
     "less-plugin-clean-css": "^1.5.1",
     "mongoose": "^5.3.7",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.5",
     "react": "^16.5.1",
     "react-components-jsx-less": "^1.0.2",
     "react-dom": "^16.5.1",
