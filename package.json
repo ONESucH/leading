@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production",
-    "server": "npm run build && nodemon server --watch",
+    "server": "npm run build && nodemon ./server --watch dist --watch src localhost:3000",
     "g": "cd .\\src\\app && react-components-jsx-less"
   },
   "keywords": [
@@ -56,6 +56,7 @@
     "less-plugin-clean-css": "^1.5.1",
     "mongoose": "^5.3.7",
     "morgan": "^1.9.1",
+    "nodemon": "^1.18.5",
     "react": "^16.5.1",
     "react-components-jsx-less": "^1.0.2",
     "react-dom": "^16.5.1",

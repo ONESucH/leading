@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import MainComponent from './app/Main/Main.component';
 import RegisterComponent from './app/Register/Register.component';
 import SignInComponent from './app/SignIn/SignIn.component';
+import NotFoundComponent from './app/NotFound/NotFound.component';
 
 /* Стили */
 import './index.less';
@@ -16,13 +17,12 @@ export default class Root extends React.Component {
         return (
             <div className="index">
                 <div className="max-size-window">
-
                     <Switch>
                         <Route exact path='/' component={MainComponent} />
                         <Route path='/reg' component={RegisterComponent} />
                         <Route path='/sign-in' component={SignInComponent} />
+                        <Route path="*" component={NotFoundComponent} />
                     </Switch>
-                    
                 </div>
             </div>
         )

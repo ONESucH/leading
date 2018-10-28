@@ -1,6 +1,6 @@
-const express = require('express'),   
-    router = express.Router(),  
-    mongoose = require('mongoose'),     
+const express = require('express'),
+    router = express.Router(),
+    mongoose = require('mongoose'),
     UserModelRegistration = require('../models/users');
 
 router.get('/', (req, res, next) => {

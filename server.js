@@ -1,16 +1,15 @@
-/* Установить предварительно nodemon -g */
 'use strict';
 const express = require('express'), // наше приложение с использованием express
     app = express(), // запуск main страницы
+    router = express.Router(), // роутер
     mongoose = require('mongoose'), // драйвер для подключения к mongodb
-    path = require('path'), // дает возможность бегать по папкам
     logger = require('morgan'), // отслеживание ошибок
     bodyParser = require('body-parser'), // парсим в json запросы корректно
     cookieParser = require('cookie-parser'), // Парсер куки
-    registration = require('./server/routers/users'); // роутер
+    users = require('./server/routers/users'); // роутер
 
 /* Подключаем mongodb */
-mongoose.connect('mongodb://localhost/leading-user', { useNewUrlParser: true }, (err, db) => {
+mongoose.connect('mongodb://localhost/leading-user', {useNewUrlParser: true}, (err, db) => {
 
     if (err) throw err;
 
@@ -31,25 +30,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 /* ------------- */
 
 /* По этому маршруту делаем запросы */
-app.use(['/reg'], registration);
+app.use(['/reg'], users);
 /* ------------------ */
 
-/* Поиск проекта и содержимого */
-app.get('/', function(req, res) {
-    res.sendfile('dist/index.html');
+/* Поиск проекта и компонент */
+app.use('/', express.static(__dirname + '/dist/'));
+app.use('/reg', (req, res) => {
 });
-
-app.use('/', express.static(__dirname + '/dist'));
-/*app.use('/game-table', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/html/game-table/game-table.html'));
-    res.render('html/game-table/game-table.html', {title: 'Игровые новости'});
-});*/
 /* --------------------------- */
-
-/* error 404 */
-app.use((req, res, next) => {
-    res.status(404).sendFile(__dirname + '/client/html/404/404.html');
-});
 
 /* error 500 */
 app.use((err, req, res, next) => {
@@ -57,7 +45,12 @@ app.use((err, req, res, next) => {
     res.status(500).send('Что-то сломалось!');
 });
 
-/* Запуск сервера по порту */
+/* error 404 */
+app.use((req, res, next) => {
+    res.status(404).redirect('..');
+});
+
+/* Запуск сервера(должен совпадать с бекенд сервером) */
 app.listen(3000, () => {
     console.log('Сервер запущен: localhost:3000');
 });

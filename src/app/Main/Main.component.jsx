@@ -21,7 +21,8 @@ export default class MainComponent extends React.Component {
             <div className="app-Main">
                 <HeaderComponent />
                 <div className="main">
-                    <p>main</p>
+                    <Link to="/reg">reg</Link><br />
+                    <Link to="/sign-in">sign-in</Link>
                 </div>
                 <FooterComponent />
             </div>

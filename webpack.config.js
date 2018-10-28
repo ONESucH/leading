@@ -90,6 +90,9 @@ module.exports = (env, argv) => {
         config.resolve = {
             extensions: ['.js', '.jsx', '.ts']
         };
+        config.performance = {
+            hints: false // предупреждения об ошибках/уведомлениях/подсказки - default: 1 value - "warning", "error", "false"
+        };
         config.target = 'web';
         config.module = {
             rules: [
