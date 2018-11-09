@@ -1,5 +1,7 @@
 /* Модули */
 import React from 'react';
+import {Link} from 'react-router-dom';
+import InputMask from 'react-input-mask';
 
 /* Стили */
 import './Register.component.less';
@@ -48,6 +50,7 @@ export default class RegisterComponent extends React.Component {
                     {this.form_err && (<span>Форма не валидна</span>)}
                     <label>
                         <input name="name"
+                               pattern="^[a-zA-Zа-яА-ЯёЁ]+$"
                                type="text"
                                value={this.state.name}
                                onChange={this.serializeData}
@@ -57,22 +60,26 @@ export default class RegisterComponent extends React.Component {
                     <label>
                         <input name="nick_name"
                                type="text"
+                               pattern="^[a-zA-Z0-9]+$"
                                value={this.state.nick_name}
                                onChange={this.serializeData}
                                placeholder="Никнем"
                                required />
                     </label>
                     <label>
-                        <input name="phone"
+                        <InputMask name="phone"
                                type="text"
+                               pattern="[0-9()+-]{0,16}"
                                value={this.state.phone}
                                onChange={this.serializeData}
-                               placeholder="Телефон"
+                               placeholder="+9(999)999-99-99"
+                               mask="+9(999)999-99-99"
                                required />
                     </label>
                     <label>
                         <input name="pass"
                                type="password"
+                               pattern="^[a-zA-Z0-9]{6,30}"
                                value={this.state.pass}
                                onChange={this.serializeData}
                                placeholder="Пароль будет скрыт"
@@ -81,6 +88,7 @@ export default class RegisterComponent extends React.Component {
                     <label>
                         <input name="pass_confirm"
                                type="password"
+                               pattern="^[a-zA-Z0-9]{6,30}"
                                value={this.state.pass_confirm}
                                onChange={this.serializeData}
                                placeholder="Повторите пароль"
@@ -89,6 +97,9 @@ export default class RegisterComponent extends React.Component {
                     <label>
                         <input type="submit" value="отправить" />
                     </label>
+                    <div className="sign-in">
+                        <Link to="/sign-in">Войти</Link>
+                    </div>
                 </form>
             </div>
         )
