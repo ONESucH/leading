@@ -1,10 +1,22 @@
-.form {
-  input:valid {
-    color: green;
-    box-shadow: inset 0 0 1px green;
-  }
-  input:invalid {
-    color: red;
-    box-shadow: inset 0 0 1px red;
-  }
+input:valid {
+  color: #000;
+  text-shadow: -1px 0 1px #0075da;
+}
+input:invalid {
+  color: red;
+}
+input[type=submit] {
+  color: #000;
+}
+form:invalid input[type=submit] {
+  background: rgba(213, 252, 0, 0.7);
+}
+/*input:focus {
+  box-shadow: inset 0 0 1px 1px #000 !important;
+}*/
+
+.form-no-valid {
+  font-weight: 600;
+  text-align: center;
+  margin: 5px 0;
 }

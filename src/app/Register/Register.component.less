@@ -1,6 +1,7 @@
 @import '../../librares.global.less';
 @import '../../aliases.less';
 @import '../../styles.less';
+@import '../../form-validation';
 @import './register.component.less';
 @import './register.component.adaptive.less';
 
@@ -20,10 +21,11 @@
   margin: auto;
   label {
     position: relative;
-    display: flex;
+    .a-column;
     .a-stretch;
   }
   input {
+    width: auto;
     outline: none;
     padding: 10px 5px;
     flex-grow: 1;
@@ -33,15 +35,9 @@
     border-left: none;
     border-bottom: 1px solid #000;
     border-radius: 2px;
-    &::-webkit-input-placeholder {
-      color: silver;
-    }
-    &::-moz-placeholder {
-      color: silver;
-    }
-    &:-ms-input-placeholder {
-      color: silver;
-    }
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder,
     &:-moz-placeholder {
       color: silver;
     }
@@ -67,6 +63,7 @@
   }
   h4 {
     text-align: center;
+    margin-bottom: 10px;
   }
 }
 
@@ -78,11 +75,12 @@
     font-weight: 600;
     text-decoration: underline;
     text-shadow: 0 0 4px #000;
-    transition: 1s;
+    transition: .5s;
     margin: 10px 0;
     color: #000;
+    outline: none;
     &:hover {
-      text-shadow: 0 5px 10px #000;
+      text-shadow: 0 5px calc(100vw) #000;
     }
   }
 }
