@@ -17,9 +17,18 @@ export default class RegisterComponent extends React.Component {
             phone: '',
             pass: '',
             pass_confirm: '',
-            form_err: false,
-            pass_err: false,
-            nick_err: false
+            patterns: {
+                patternName: '^[a-zA-Zа-яА-ЯёЁ]{4,25}',
+                patternNick_name: '^[a-zA-Z0-9]{4,20}',
+                patternPhone: '[0-9()+-]{0,16}',
+                patternPass: '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}',
+                patternPass_confirm: '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}',
+            },
+            renderForms: {
+                form_err: false,
+                pass_err: false,
+                nick_err: false
+            }
         };
 
         this.formReset = this.state; // запишем состоянием в пустом виде
@@ -38,14 +47,22 @@ export default class RegisterComponent extends React.Component {
     saveData(e) {
         e.preventDefault();
 
-        if (this.state.name == '' || this.state.nick_name == '' || this.state.phone == '' || this.state.pass == '' || this.state.pass_confirm == '') {
+        if (this.state.name == '' ||
+            this.state.nick_name == '' ||
+            this.state.phone == '' ||
+            this.state.pass == '' ||
+            this.state.pass_confirm == '') {
             this.setState({
-                form_err: true
+                renderForms: {
+                    form_err: true
+                }
             });
             return false;
         } else if (this.state.pass !== this.state.pass_confirm) {
             this.setState({
-                pass_err: true
+                renderForms: {
+                    pass_err: true
+                }
             });
             return false;
         } else {
@@ -60,23 +77,23 @@ export default class RegisterComponent extends React.Component {
             <div className="app-Register">
                 <form className="form" onSubmit={this.saveData.bind(this)}>
                     <h4>Зарегистрируйтесь</h4>
-                    {this.state.form_err && (<div className="form-no-valid">Есть пустые формы</div>)}
+                    {this.state.renderForms.form_err && (<div className="form-no-valid">Есть пустые формы</div>)}
                     <label>
                         <input
                             name="name"
-                            pattern="^[a-zA-Zа-яА-ЯёЁ]{4,25}"
+                            pattern={this.state.patterns.patternName}
                             type="text"
                             value={this.state.name}
                             onChange={this.serializeData}
                             placeholder="Имя"
                             required/>
                     </label>
-                    {this.state.nick_err && (<div className="form-no-valid">Никнейм уже использется</div>)}
+                    {this.state.renderForms.nick_err && (<div className="form-no-valid">Никнейм уже использется</div>)}
                     <label>
                         <input
                             name="nick_name"
                             type="text"
-                            pattern="^[a-zA-Z0-9]{4,20}"
+                            pattern={this.state.patterns.patternNick_name}
                             value={this.state.nick_name}
                             onChange={this.serializeData}
                             placeholder="Никнем"
@@ -86,19 +103,19 @@ export default class RegisterComponent extends React.Component {
                         <InputMask
                             name="phone"
                             type="text"
-                            pattern="[0-9()+-]{0,16}"
+                            pattern={this.state.patterns.patternPhone}
                             value={this.state.phone}
                             onChange={this.serializeData}
                             placeholder="+9(999)999-99-99"
                             mask="+9(999)999-99-99"
                             required/>
                     </label>
-                    {this.state.pass_err && (<div className="form-no-valid">Пароли не совпадают</div>)}
+                    {this.state.renderForms.pass_err && (<div className="form-no-valid">Пароли не совпадают</div>)}
                     <label>
                         <input
                             name="pass"
                             type="password"
-                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                            pattern={this.state.patterns.patternPass}
                             value={this.state.pass}
                             onChange={this.serializeData}
                             placeholder="Пароль будет скрыт"
@@ -108,7 +125,7 @@ export default class RegisterComponent extends React.Component {
                         <input
                             name="pass_confirm"
                             type="password"
-                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                            pattern={this.state.patterns.patternPass_confirm}
                             value={this.state.pass_confirm}
                             onChange={this.serializeData}
                             placeholder="Повторите пароль"
