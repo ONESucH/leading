@@ -17,23 +17,22 @@ export default class RegisterComponent extends React.Component {
             phone: '',
             pass: '',
             pass_confirm: '',
-            patterns: {
-                patternName: '^[a-zA-Zа-яА-ЯёЁ]{4,25}',
-                patternNick_name: '^[a-zA-Z0-9]{4,20}',
-                patternPhone: '[0-9()+-]{0,16}',
-                patternPass: '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}',
-                patternPass_confirm: '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}',
-            },
-            renderForms: {
-                form_err: false,
-                pass_err: false,
-                nick_err: false
-            }
+
+            patternName: '^[a-zA-Zа-яА-ЯёЁ]{4,25}',
+            patternNick_name: '^[a-zA-Z0-9]{4,20}',
+            patternPhone: '[0-9()+-]{0,16}',
+            patternPass: '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}',
+            patternPass_confirm: '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}',
+
+            form_err: false,
+            pass_err: false,
+            nick_err: false
         };
 
         this.formReset = this.state; // запишем состоянием в пустом виде
 
         this.serializeData = this.serializeData.bind(this);
+        this.saveData = this.saveData.bind(this);
     }
 
     serializeData(e) {
@@ -47,22 +46,38 @@ export default class RegisterComponent extends React.Component {
     saveData(e) {
         e.preventDefault();
 
+        let findsInputs = e.target.getElementsByTagName('input'),
+            counter = 0;
+
+        // Проверяем инпуты на паттерны и их правильность валидации
+        for(let letter = 0; letter < findsInputs.length-1; letter++) {
+
+            for (let key in this.state) {
+
+                if (this.state[key] === findsInputs[letter].pattern || counter === findsInputs.length-2) {
+
+                    if (counter >= 0 && counter <= findsInputs.length-2) counter++;
+
+                }
+            }
+        }
+
+        // Проверка на количество инпутов
+        if (counter !== findsInputs.length-1) return false;
+
+        // Проверяем пустые формы
         if (this.state.name == '' ||
             this.state.nick_name == '' ||
             this.state.phone == '' ||
             this.state.pass == '' ||
             this.state.pass_confirm == '') {
             this.setState({
-                renderForms: {
-                    form_err: true
-                }
+                form_err: true
             });
             return false;
         } else if (this.state.pass !== this.state.pass_confirm) {
             this.setState({
-                renderForms: {
-                    pass_err: true
-                }
+                pass_err: true
             });
             return false;
         } else {
@@ -75,25 +90,25 @@ export default class RegisterComponent extends React.Component {
     render() {
         return (
             <div className="app-Register">
-                <form className="form" onSubmit={this.saveData.bind(this)}>
+                <form className="form" onSubmit={this.saveData}>
                     <h4>Зарегистрируйтесь</h4>
-                    {this.state.renderForms.form_err && (<div className="form-no-valid">Есть пустые формы</div>)}
+                    {this.state.form_err && (<div className="form-no-valid">Есть пустые формы</div>)}
                     <label>
                         <input
                             name="name"
-                            pattern={this.state.patterns.patternName}
+                            pattern={this.state.patternName}
                             type="text"
                             value={this.state.name}
                             onChange={this.serializeData}
                             placeholder="Имя"
                             required/>
                     </label>
-                    {this.state.renderForms.nick_err && (<div className="form-no-valid">Никнейм уже использется</div>)}
+                    {this.state.nick_err && (<div className="form-no-valid">Никнейм уже использется</div>)}
                     <label>
                         <input
                             name="nick_name"
                             type="text"
-                            pattern={this.state.patterns.patternNick_name}
+                            pattern={this.state.patternNick_name}
                             value={this.state.nick_name}
                             onChange={this.serializeData}
                             placeholder="Никнем"
@@ -103,19 +118,19 @@ export default class RegisterComponent extends React.Component {
                         <InputMask
                             name="phone"
                             type="text"
-                            pattern={this.state.patterns.patternPhone}
+                            pattern={this.state.patternPhone}
                             value={this.state.phone}
                             onChange={this.serializeData}
                             placeholder="+9(999)999-99-99"
                             mask="+9(999)999-99-99"
                             required/>
                     </label>
-                    {this.state.renderForms.pass_err && (<div className="form-no-valid">Пароли не совпадают</div>)}
+                    {this.state.pass_err && (<div className="form-no-valid">Пароли не совпадают</div>)}
                     <label>
                         <input
                             name="pass"
                             type="password"
-                            pattern={this.state.patterns.patternPass}
+                            pattern={this.state.patternPass}
                             value={this.state.pass}
                             onChange={this.serializeData}
                             placeholder="Пароль будет скрыт"
@@ -125,7 +140,7 @@ export default class RegisterComponent extends React.Component {
                         <input
                             name="pass_confirm"
                             type="password"
-                            pattern={this.state.patterns.patternPass_confirm}
+                            pattern={this.state.patternPass_confirm}
                             value={this.state.pass_confirm}
                             onChange={this.serializeData}
                             placeholder="Повторите пароль"
