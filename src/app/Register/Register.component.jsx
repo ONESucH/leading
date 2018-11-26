@@ -2,6 +2,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import InputMask from 'react-input-mask';
+import { ApiLocation } from '../../components/api/api_location';
 
 /* Стили */
 import './Register.component.less';
@@ -46,24 +47,27 @@ export default class RegisterComponent extends React.Component {
     saveData(e) {
         e.preventDefault();
 
+        // Защита на удаление аттрибута
+        if (e.target.hasAttribute('noValidate')) return false;
+
         let findsInputs = e.target.getElementsByTagName('input'),
             counter = 0;
 
         // Проверяем инпуты на паттерны и их правильность валидации
-        for(let letter = 0; letter < findsInputs.length-1; letter++) {
+        for (let letter = 0; letter < findsInputs.length - 1; letter++) {
 
             for (let key in this.state) {
 
-                if (this.state[key] === findsInputs[letter].pattern || counter === findsInputs.length-2) {
+                if (this.state[key] === findsInputs[letter].pattern || counter === findsInputs.length - 2) {
 
-                    if (counter >= 0 && counter <= findsInputs.length-2) counter++;
+                    if (counter >= 0 && counter <= findsInputs.length - 2) counter++;
 
                 }
             }
         }
 
         // Проверка на количество инпутов
-        if (counter !== findsInputs.length-1) return false;
+        if (counter !== findsInputs.length - 1) return false;
 
         // Проверяем пустые формы
         if (this.state.name == '' ||
@@ -81,7 +85,22 @@ export default class RegisterComponent extends React.Component {
             });
             return false;
         } else {
-            console.log('Все хорошо', this.state);
+
+            let user = {
+                name: this.state.name,
+                nick_name: this.state.nick_name,
+                phone: this.state.phone,
+                pass: this.state.pass,
+                pass_confirm: this.state.pass_confirm
+            };
+
+            // Из промисса вытащим json
+            ApiLocation().then((res) => {
+                user.reg_location = res;
+                return res;
+            });
+
+            console.log('Все хорошо', user);
 
             this.setState(this.formReset); // вернет пустое состояние
         }
